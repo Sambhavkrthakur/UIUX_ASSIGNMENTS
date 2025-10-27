@@ -1,53 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Everest Travels - Booking</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Booking — Everest Travels</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Everest Travels</a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="packages.html">Packages</a>
+        <a href="booking.html">Booking</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mainNav">☰</button>
+    </div>
+  </header>
 
-<header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="packages.html">Packages</a>
-    <a href="booking.html">Booking</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <main class="container booking-page">
+    <h1>Booking Form</h1>
+    <p class="muted">Fill the form — the estimated total updates live. Submit only when all fields are valid.</p>
 
-<div class="container">
-  <h1>Book Your Trip</h1>
-  <form>
-    <label>Name:</label>
-    <input type="text" required>
+    <form id="bookingForm" class="booking-form" novalidate>
+      <div class="row">
+        <label for="fullName">Full name *</label>
+        <input id="fullName" name="fullName" required minlength="2" />
+      </div>
 
-    <label>Email:</label>
-    <input type="email" required>
+      <div class="row two-column">
+        <div>
+          <label for="checkIn">Check-in *</label>
+          <input id="checkIn" name="checkIn" type="date" required />
+        </div>
+        <div>
+          <label for="checkOut">Check-out *</label>
+          <input id="checkOut" name="checkOut" type="date" required />
+        </div>
+      </div>
 
-    <label>Destination:</label>
-    <select>
-      <option>Everest Base Camp</option>
-      <option>Pokhara Adventure</option>
-      <option>Chitwan Jungle Safari</option>
-      <option>Kathmandu Heritage Tour</option>
-    </select>
+      <div class="row">
+        <label for="packageSelect">Select Package *</label>
+        <select id="packageSelect" required>
+          <!-- options via script.js -->
+        </select>
+      </div>
 
-    <label>Start Date:</label>
-    <input type="date" required>
+      <div class="row two-column">
+        <div>
+          <label for="guests">Guests *</label>
+          <input id="guests" type="number" min="1" max="20" value="1" required />
+        </div>
+        <div>
+          <label for="promo">Promo code</label>
+          <input id="promo" placeholder="e.g. EARLYBIRD" />
+        </div>
+      </div>
 
-    <label>Number of People:</label>
-    <input type="number" min="1" required>
+      <div class="price-panel">
+        <div><strong>Estimated nights:</strong> <span id="nights">0</span></div>
+        <div><strong>Live total (USD):</strong> <span id="liveTotal">0.00</span></div>
+      </div>
 
-    <button type="submit">Submit Booking</button>
-  </form>
-</div>
+      <div class="form-actions">
+        <button id="submitBtn" class="btn" type="submit" disabled>Confirm Booking</button>
+        <button type="reset" class="btn btn-ghost">Reset</button>
+      </div>
 
-<footer>
-  <p>© 2025 Everest Travels</p>
-</footer>
+      <div id="formMessages" aria-live="polite" class="muted" style="margin-top:.5rem"></div>
+    </form>
+  </main>
 
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="yearBooking"></span> Everest Travels</p>
+    </div>
+  </footer>
+
+  <script>document.getElementById("yearBooking").textContent = new Date().getFullYear();</script>
+  <script src="script.js" defer></script>
 </body>
 </html>

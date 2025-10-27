@@ -1,40 +1,279 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Gallery - Saturnalia 2025</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gallery — Everest Travels</title>
+
+  <!-- Elegant Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Enhanced Gallery Styling --- */
+
+    .gallery-page {
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .gallery-page h1 {
+      font-family: 'Lora', serif;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 2.4rem;
+    }
+
+    .gallery-page .muted {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+
+    /* Section titles */
+    .place-section {
+      margin-bottom: 3rem;
+      text-align: left;
+    }
+
+    .place-section h2 {
+      color: var(--primary);
+      font-family: 'Lora', serif;
+      margin-bottom: 0.75rem;
+      font-size: 1.8rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 0.6rem;
+    }
+
+    .place-section p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      justify-items: center;
+    }
+
+    .gallery-item {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 250px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 34px rgba(0, 0, 0, 0.25);
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Modal Styling */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal[aria-hidden="false"] {
+      display: flex;
+    }
+
+    .modal-inner {
+      position: relative;
+      max-width: 900px;
+      width: 90%;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      padding: 1rem;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .modal img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .modal h3 {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: var(--primary);
+    }
+
+    .modal p {
+      color: var(--muted);
+      margin: 0.5rem 0 0;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.8rem;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 700px) {
+      .gallery-item { height: 220px; }
+      .modal-inner { width: 95%; }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Saturnalia 2025 - Gallery</h1>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Everest Travels</a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="packages.html">Packages</a>
+        <a href="booking.html">Booking</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mainNav">☰</button>
+    </div>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="events.html">Events</a>
-    <a href="schedule.html">Schedule</a>
-    <a href="register.html">Register</a>
-    <a href="gallery.html" class="active">Gallery</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <main class="container gallery-page">
+    <h1>Travel Gallery</h1>
+    <p class="muted">Explore breathtaking moments from real destinations we cover. Click on any photo to view it in full size.</p>
 
-  <div class="container">
-    <h2>Photo Gallery</h2>
-    <div class="gallery">
-      <img src="https://i.ytimg.com/vi/0KG26QqzYB0/hqdefault.jpg" alt="Event 1">
-      <img src="https://cranberrycustoms.com/wp-content/uploads/2023/10/WhatsApp-Image-2020-02-03-at-9.13.32-AM-2-1024x683.jpeg" alt="Event 2">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7lYOCbStEJ5Y121rC1HtPWTGOTQAk55MyXjo-UQJh1ox5FBNmQilKn-bhM7FaW8b7DAk&usqp=CAU" alt="Event 3">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNNCsFdSJ5CEhcM2ntQiJR5yAUW_xfYlAksw&s" alt="Event 4">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFwwGsRHQfWuGB4FsRR6QGNle5aQaLnhePxA&s" alt="Event 5">
-      <img src="https://media.licdn.com/dms/image/v2/D561FAQG-I7sYhGppSQ/feedshare-document-images_1280/feedshare-document-images_1280/1/1729921793089?e=1756944000&v=beta&t=frNFAW7lnCrUjBj6w_rCLE4ISra5gmCeXC596NOpHT4" alt="Event 6">
-      <img src="https://image-static.collegedunia.com/public/reviewPhotos/942576/inbound8642243160620634684.jpg" alt="Event 7">
-      <img src="https://static.zollege.in/public/reviewPhotos/218629/Snapchat-651417939.jpg" alt="Event 8">
+    <!-- Everest Base Camp Section -->
+    <section class="place-section">
+      <h2>Everest Base Camp</h2>
+      <p>The ultimate trekking adventure with panoramic Himalayan peaks and the thrill of being near the world’s highest mountain.</p>
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1456994640018-7fb7eeac74e2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1074');" onclick="openModal(this)" data-title="Everest Trail" data-caption="View of Everest range from Tengboche">
+          <div class="caption">Everest Trail</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80');" onclick="openModal(this)" data-title="Base Camp Morning" data-caption="Golden sunlight hitting Everest peak">
+          <div class="caption">Base Camp Morning</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1635770719148-ff581d7a92d0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=735');" onclick="openModal(this)" data-title="Suspension Bridge" data-caption="High-altitude bridge on the trek">
+          <div class="caption">Suspension Bridge</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://plus.unsplash.com/premium_photo-1694475616112-bf74aa5f12ea?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1169');" onclick="openModal(this)" data-title="Himalayan Ridge" data-caption="Snowy ridge en route to Namche Bazaar">
+          <div class="caption">Himalayan Ridge</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pokhara Lake Section -->
+    <section class="place-section">
+      <h2>Pokhara Lake</h2>
+      <p>Pokhara — Nepal’s peaceful lake city known for its reflection of Annapurna Range and colorful boats on Phewa Lake.</p>
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1735533441842-33c5e47b22ae?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UGhld2ElMjBMYWtlfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600');" onclick="openModal(this)" data-title="Phewa Lake" data-caption="Serene view of Phewa Lake at dawn">
+          <div class="caption">Phewa Lake</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1696982075639-86c70bc06607?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1074');" onclick="openModal(this)" data-title="Boats of Pokhara" data-caption="Colorful boats waiting for travelers">
+          <div class="caption">Boats of Pokhara</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1747568720419-51020b34d0a1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1331');" onclick="openModal(this)" data-title="Lakeside Sunset" data-caption="Orange sunset view over the hills">
+          <div class="caption">Lakeside Sunset</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kathmandu Valley Section -->
+    <section class="place-section">
+      <h2>Kathmandu Valley</h2>
+      <p>The cultural heart of Nepal — a mix of ancient temples, pagodas, markets, and rich Newari architecture.</p>
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1755010585956-d32a7036ea87?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fFBhc2h1cGF0aW5hdGglMjBUZW1wbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600');" onclick="openModal(this)" data-title="Pashupatinath Temple" data-caption="A sacred temple along the Bagmati River">
+          <div class="caption">Pashupatinath Temple</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1662563060416-023750038bce?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170');" onclick="openModal(this)" data-title="Boudhanath Stupa" data-caption="Massive stupa with colorful prayer flags">
+          <div class="caption">Boudhanath Stupa</div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.unsplash.com/photo-1609898793184-7d1496532e84?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1085');" onclick="openModal(this)" data-title="Durbar Square" data-caption="Historic square with royal palaces">
+          <div class="caption">Durbar Square</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal" aria-hidden="true">
+    <div class="modal-inner" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+      <img id="modalImage" alt="" />
+      <h3 id="modalTitle"></h3>
+      <p id="modalCaption" class="muted"></p>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Thapar Institute | Saturnalia</p>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="yearGallery"></span> Everest Travels — All rights reserved.</p>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById("yearGallery").textContent = new Date().getFullYear();
+
+    // Modal JS
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCaption = document.getElementById("modalCaption");
+    const closeBtn = document.getElementById("modalClose");
+
+    function openModal(el) {
+      modalImg.src = el.style.backgroundImage.slice(5, -2);
+      modalTitle.textContent = el.getAttribute("data-title");
+      modalCaption.textContent = el.getAttribute("data-caption");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    closeBtn.addEventListener("click", () => modal.setAttribute("aria-hidden", "true"));
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.setAttribute("aria-hidden", "true"); });
+  </script>
 </body>
 </html>

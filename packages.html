@@ -1,57 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Everest Travels - Packages</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Packages — Everest Travels</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Everest Travels</a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="packages.html">Packages</a>
+        <a href="booking.html">Booking</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mainNav">☰</button>
+    </div>
+  </header>
 
-<header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="packages.html">Packages</a>
-    <a href="booking.html">Booking</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <main class="container">
+    <h1>Our Tour Packages</h1>
+    <p class="muted">Explore curated tours — sample base prices are shown. Final price depends on season, dates and group size.</p>
 
-<div class="container">
-  <h1>Our Tour Packages</h1>
-  <table>
-    <tr>
-      <th>Destination</th>
-      <th>Duration</th>
-      <th>Price (USD)</th>
-    </tr>
-    <tr>
-      <td>Everest Base Camp</td>
-      <td>12 Days</td>
-      <td>$1200</td>
-    </tr>
-    <tr>
-      <td>Pokhara Adventure</td>
-      <td>5 Days</td>
-      <td>$500</td>
-    </tr>
-    <tr>
-      <td>Chitwan Jungle Safari</td>
-      <td>4 Days</td>
-      <td>$450</td>
-    </tr>
-    <tr>
-      <td>Kathmandu Heritage Tour</td>
-      <td>3 Days</td>
-      <td>$300</td>
-    </tr>
-  </table>
-</div>
+    <div class="table-wrap">
+      <table id="packagesTable" class="packages-table" aria-describedby="packagesDesc">
+        <caption id="packagesDesc" style="display:none;">Available tour packages with price, duration and computed final price.</caption>
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Destination</th>
+            <th>Duration (Days)</th>
+            <th>Base Price (per person)</th>
+            <th>Season</th>
+            <th>Sample Final Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- filled by script.js -->
+        </tbody>
+      </table>
+    </div>
 
-<footer>
-  <p>© 2025 Everest Travels</p>
-</footer>
+    <a href="booking.html" class="btn">Proceed to Booking</a>
 
+    <h2>Travel Tips</h2>
+    <ul class="tips">
+      <li>🌄 Book early for shoulder season discounts.</li>
+      <li>🎒 Pack layers — mountain weather changes fast.</li>
+      <li>🙏 Respect local culture and follow your guide's instructions.</li>
+      <li>🍲 Try local cuisine for a fuller experience.</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="yearPackages"></span> Everest Travels</p>
+    </div>
+  </footer>
+
+  <script>document.getElementById("yearPackages").textContent = new Date().getFullYear();</script>
+  <script src="script.js" defer></script>
 </body>
 </html>

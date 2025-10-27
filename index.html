@@ -1,130 +1,312 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Assignment 5</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Everest Travels | Explore the World</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root {
+      --primary-color: #006d77;
+      --accent-color: #ffb703;
+      --bg-light: #f8fafc;
+      --text-dark: #1e293b;
+      --muted: #64748b;
+      --radius: 14px;
+      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .site-header {
+      background: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .main-nav a {
+      margin-left: 1.2rem;
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .main-nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .btn {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--accent-color);
+      color: black;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1617633784865-cbd925ca7cfe?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170') no-repeat center/cover;
+      color: white;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-family: 'Lora', serif;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #e2e8f0;
+    }
+
+    /* Why Section */
+    .why {
+      max-width: 1200px;
+      margin: 4rem auto;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .why h2 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Featured Packages */
+    .featured {
+      background: var(--primary-color);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+
+    .featured h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .package-card {
+      background: white;
+      color: var(--text-dark);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: left;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .package-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .package-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+
+    .package-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+
+    .site-footer {
+      background: #083d3d;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Assignment 5 Solutions</h1>
 
-  <!-- Q1 -->
-  <h2>i. Two Numbers Operations</h2>
-  <input type="number" id="num1" placeholder="Enter first number">
-  <input type="number" id="num2" placeholder="Enter second number">
-  <button onclick="calculate()">Calculate</button>
-  <p id="result1"></p>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">Everest Travels</a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="packages.html">Packages</a>
+        <a href="booking.html">Booking</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Q2 -->
-  <h2>ii. Array Operations</h2>
-  <button onclick="arrayOperations()">Run Array Operations</button>
-  <p id="result2"></p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover the World with Everest Travels</h1>
+      <p>Unforgettable journeys crafted with care. Explore nature, culture, and adventure — all in one trip.</p>
+      <a href="packages.html" class="btn">Explore Packages</a>
+    </div>
+  </section>
 
-  <!-- Q3 -->
-  <h2>iii. Form Validation</h2>
-  <form id="myForm" onsubmit="return validateForm()">
-    <input type="text" id="name" placeholder="Enter Name"><br><br>
-    <input type="email" id="email" placeholder="Enter Email"><br><br>
-    <input type="number" id="age" placeholder="Enter Age"><br><br>
-    <button type="submit">Submit</button>
-  </form>
-  <p id="result3"></p>
+  <!-- Why Us Section -->
+  <section class="why">
+    <h2>Why Choose Everest Travels?</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>🌍 Decades of Experience</h3>
+        <p>Since 1998, we’ve guided thousands across breathtaking destinations — ensuring safety and authenticity every step of the way.</p>
+      </article>
+      <article class="card">
+        <h3>💰 Transparent Pricing</h3>
+        <p>Dynamic, fair pricing that reflects the best value for your season, group, and destination.</p>
+      </article>
+      <article class="card">
+        <h3>♻️ Sustainable Tourism</h3>
+        <p>We support local communities, preserve environments, and encourage responsible travel experiences.</p>
+      </article>
+    </div>
+  </section>
 
-  <!-- Q4 -->
-  <h2>iv. Student Object</h2>
-  <button onclick="studentOperations()">Run Student Operations</button>
-  <p id="result4"></p>
+  <!-- Featured Packages -->
+  <section class="featured">
+    <h2>Featured Packages</h2>
+    <div class="package-grid">
+      <div class="package-card">
+        <img src="https://images.unsplash.com/photo-1706188370039-e0cf9bd6ea16?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Kathmandu Tour">
+        <h3>Kathmandu Discovery</h3>
+        <p>4 days | From $420<br>Historic temples, vibrant streets & mountain views.</p>
+      </div>
+      <div class="package-card">
+        <img src="https://images.unsplash.com/photo-1647346152940-6902cdf9e875?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Pokhara Trip">
+        <h3>Pokhara Lakeside Escape</h3>
+        <p>3 days | From $300<br>Boating, paragliding & peaceful lakeside walks.</p>
+      </div>
+      <div class="package-card">
+        <img src="https://plus.unsplash.com/premium_photo-1661899239706-8963d7dff710?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Annapurna Trek">
+        <h3>Himalayan Classic Trek</h3>
+        <p>7 days | From $650<br>Witness sunrise over the Annapurna range.</p>
+      </div>
+    </div>
+    <p style="margin-top: 2rem;">Ready to go? <a href="booking.html" class="btn">Book Now</a></p>
+  </section>
 
-  <!-- Q5 -->
-  <h2>v. Array Function (map, filter, reduce)</h2>
-  <button onclick="arrayFunctions()">Run Array Function</button>
-  <p id="result5"></p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Everest Travels | Designed with passion for adventure.</p>
+  </footer>
 
   <script>
-    // Q1
-    function calculate() {
-      let a = parseFloat(document.getElementById("num1").value);
-      let b = parseFloat(document.getElementById("num2").value);
-
-      let sum = a + b;
-      let diff = a - b;
-      let prod = a * b;
-      let quot = b !== 0 ? (a / b) : "Infinity";
-
-      document.getElementById("result1").innerHTML =
-        `Sum: ${sum} <br> Difference: ${diff} <br> Product: ${prod} <br> Quotient: ${quot}`;
-    }
-
-    // Q2
-    function arrayOperations() {
-      let arr = [12, 5, 33, 8, 21];
-
-      let largest = Math.max(...arr);
-      let smallest = Math.min(...arr);
-      let ascending = [...arr].sort((a, b) => a - b);
-      let descending = [...arr].sort((a, b) => b - a);
-
-      document.getElementById("result2").innerHTML =
-        `Array: [${arr}] <br> Largest: ${largest} <br> Smallest: ${smallest} <br>
-         Ascending: [${ascending}] <br> Descending: [${descending}]`;
-    }
-
-    // Q3
-    function validateForm() {
-      let name = document.getElementById("name").value.trim();
-      let email = document.getElementById("email").value.trim();
-      let age = parseInt(document.getElementById("age").value);
-
-      if (name === "") {
-        document.getElementById("result3").innerHTML = "Name cannot be empty!";
-        return false;
-      }
-
-      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-      if (!emailPattern.test(email)) {
-        document.getElementById("result3").innerHTML = "Invalid email format!";
-        return false;
-      }
-
-      if (isNaN(age) || age < 18 || age > 100) {
-        document.getElementById("result3").innerHTML = "Age must be between 18 and 100!";
-        return false;
-      }
-
-      document.getElementById("result3").innerHTML = "Form submitted successfully!";
-      return false; // stop page reload
-    }
-
-    // Q4
-    function studentOperations() {
-      let student = {
-        name: "Sambhav",
-        age: 21,
-        grade: "B"
-      };
-
-      student.class = "CS-101"; // add property
-      student.grade = "A";      // update grade
-
-      let info = "";
-      for (let key in student) {
-        info += `${key}: ${student[key]} <br>`;
-      }
-
-      document.getElementById("result4").innerHTML = info;
-    }
-
-    // Q5
-    function arrayFunctions() {
-      let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-      let evenNumbers = arr.filter(num => num % 2 === 0); // remove odd
-      let multiplied = evenNumbers.map(num => num * 2);   // multiply by 2
-      let sum = multiplied.reduce((acc, val) => acc + val, 0); // sum
-
-      document.getElementById("result5").innerHTML =
-        `Original Array: [${arr}] <br> Even Numbers: [${evenNumbers}] <br>
-         Multiplied by 2: [${multiplied}] <br> Sum: ${sum}`;
-    }
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
