@@ -3,18 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>✨ To-Do List</title>
+  <title>SafeEntry+ — Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <h1>✨ To-Do List</h1>
-    <input type="text" id="taskTitle" placeholder="Enter task title" />
-    <input type="text" id="taskDescription" placeholder="Enter task description" />
-    <button id="addTaskBtn">+ Add Task</button>
-    <div id="taskList"></div>
-  </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/5974/5974636.png" alt="logo">
+        <h2>SafeEntry+</h2>
+      </div>
+      <ul>
+        <li><a href="index.html" class="active">🏠 Dashboard</a></li>
+        <li><a href="add-visitor.html">➕ Add Visitor</a></li>
+        <li><a href="logs.html">📋 Logs</a></li>
+      </ul>
+      <div class="footer">
+        <p>© 2025 SafeEntry+ • Built by Sambhav</p>
+      </div>
+    </aside>
 
-  <script src="script.js"></script>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <input
+          type="text"
+          id="searchBar"
+          placeholder="Search visitor, host, or purpose..."
+          onkeyup="searchVisitor()"
+        />
+        <button onclick="exportCSV()">Export CSV</button>
+        <span id="clock"></span>
+      </header>
+
+      <!-- Dashboard Cards -->
+      <section class="page-section">
+        <div class="stats">
+          <div class="stat-card">
+            <h3>Total Visitors</h3>
+            <p id="totalVisitors">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Inside Now</h3>
+            <p id="insideNow">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Checked Out</h3>
+            <p id="checkedOut">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Add Section -->
+      <section class="page-section">
+        <div class="card">
+          <div class="card-header">
+            <h2>Quick Add Visitor</h2>
+            <p class="card-subtitle">Register a visitor with minimum required details.</p>
+          </div>
+
+          <div class="form-row">
+            <input type="text" id="qName" placeholder="Visitor name" />
+            <input type="text" id="qContact" placeholder="Contact number" />
+          </div>
+          <div class="form-row">
+            <input type="text" id="qPurpose" placeholder="Purpose of visit" />
+            <input type="text" id="qHost" placeholder="Host / Person to meet" />
+          </div>
+          <div class="card-actions">
+            <button class="primary-btn" onclick="addQuickVisitor()">Add Visitor</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>

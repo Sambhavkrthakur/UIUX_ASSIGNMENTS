@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeEntry+ — Visitor Logs</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/5974/5974636.png" alt="logo">
+        <h2>SafeEntry+</h2>
+      </div>
+      <ul>
+        <li><a href="index.html">🏠 Dashboard</a></li>
+        <li><a href="add-visitor.html">➕ Add Visitor</a></li>
+        <li><a href="logs.html" class="active">📋 Logs</a></li>
+      </ul>
+      <div class="footer">
+        <p>© 2025 SafeEntry+ • Built by Sambhav</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <input
+          type="text"
+          id="searchBar"
+          placeholder="Search visitor, host, or purpose..."
+          onkeyup="searchVisitor()"
+        />
+        <button onclick="exportCSV()">Export CSV</button>
+        <span id="clock"></span>
+      </header>
+
+      <!-- Logs Section -->
+      <section class="page-section">
+        <div class="card">
+          <div class="card-header card-header-row">
+            <div>
+              <h2>Visitor Logs</h2>
+              <p class="card-subtitle">
+                Complete record of all visitors including check-in and check-out times.
+              </p>
+            </div>
+            <button class="danger-btn" onclick="clearHistory()">🗑 Clear History</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="visitorTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Visitor Name</th>
+                  <th>Contact</th>
+                  <th>Purpose</th>
+                  <th>Host</th>
+                  <th>Time In</th>
+                  <th>Time Out</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

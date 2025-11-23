@@ -1,84 +1,206 @@
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
+// Load visitors from LocalStorage
+let visitors = JSON.parse(localStorage.getItem("visitors") || "[]");
 
-// Load tasks from localStorage when page loads
-window.onload = function () {
-  const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  savedTasks.forEach(task => createTaskElement(task.title, task.description, task.completed));
-};
+// Save to LocalStorage
+function saveToStorage() {
+  localStorage.setItem("visitors", JSON.stringify(visitors));
+}
 
-// Add new task
-addTaskBtn.addEventListener("click", function () {
-  const title = document.getElementById("taskTitle").value.trim();
-  const description = document.getElementById("taskDescription").value.trim();
+// Clock
+function updateClock() {
+  const now = new Date();
+  const clockEl = document.getElementById("clock");
+  if (clockEl) {
+    clockEl.textContent = now.toLocaleTimeString();
+  }
+}
+setInterval(updateClock, 1000);
+updateClock();
 
-  if (title === "" || description === "") {
-    alert("Please enter both title and description!");
+// Add Visitor from full form (Add Visitor page)
+function addVisitor() {
+  const nameInput = document.getElementById("vName");
+  // If form not present on this page, do nothing
+  if (!nameInput) return;
+
+  const contactInput = document.getElementById("vContact");
+  const purposeInput = document.getElementById("vPurpose");
+  const hostInput = document.getElementById("vHost");
+
+  const name = nameInput.value.trim();
+  const contact = contactInput.value.trim();
+  const purpose = purposeInput.value.trim();
+  const host = hostInput.value.trim();
+
+  if (!name || !contact || !purpose || !host) {
+    alert("Please fill all fields!");
     return;
   }
 
-  createTaskElement(title, description, false);
-  saveTasksToLocalStorage();
+  const visitor = {
+    id: visitors.length + 1,
+    name,
+    contact,
+    purpose,
+    host,
+    timeIn: new Date().toLocaleTimeString(),
+    timeOut: "-"
+  };
 
-  document.getElementById("taskTitle").value = "";
-  document.getElementById("taskDescription").value = "";
+  visitors.push(visitor);
+  saveToStorage();
+  clearInputs();
+  updateStats();
+  updateTable();
+  alert("Visitor added successfully.");
+}
+
+// Quick Add from Dashboard
+function addQuickVisitor() {
+  const qName = document.getElementById("qName");
+  if (!qName) return; // not on this page
+
+  const qContact = document.getElementById("qContact");
+  const qPurpose = document.getElementById("qPurpose");
+  const qHost = document.getElementById("qHost");
+
+  const name = qName.value.trim();
+  const contact = qContact.value.trim();
+  const purpose = qPurpose.value.trim();
+  const host = qHost.value.trim();
+
+  if (!name || !contact || !purpose || !host) {
+    alert("Please fill all quick-add fields!");
+    return;
+  }
+
+  const visitor = {
+    id: visitors.length + 1,
+    name,
+    contact,
+    purpose,
+    host,
+    timeIn: new Date().toLocaleTimeString(),
+    timeOut: "-"
+  };
+
+  visitors.push(visitor);
+  saveToStorage();
+  clearInputs();
+  updateStats();
+  updateTable();
+  alert("Visitor added successfully.");
+}
+
+// Build Logs Table (Logs page)
+function updateTable() {
+  const tbody = document.querySelector("#visitorTable tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  visitors.forEach((v) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${v.id}</td>
+      <td>${v.name}</td>
+      <td>${v.contact}</td>
+      <td>${v.purpose}</td>
+      <td>${v.host}</td>
+      <td>${v.timeIn}</td>
+      <td>${v.timeOut}</td>
+      <td>
+        ${
+          v.timeOut === "-"
+            ? `<button class="mark-exit" onclick="markExit(${v.id})">Mark Exit</button>`
+            : "Exited"
+        }
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// Mark visitor exit
+function markExit(id) {
+  const visitor = visitors.find((v) => v.id === id);
+  if (!visitor) return;
+
+  visitor.timeOut = new Date().toLocaleTimeString();
+  saveToStorage();
+  updateTable();
+  updateStats();
+}
+
+// Update Dashboard stats (Dashboard page)
+function updateStats() {
+  const totalEl = document.getElementById("totalVisitors");
+  const insideEl = document.getElementById("insideNow");
+  const outEl = document.getElementById("checkedOut");
+
+  if (totalEl) totalEl.textContent = visitors.length;
+  if (insideEl) insideEl.textContent = visitors.filter((v) => v.timeOut === "-").length;
+  if (outEl) outEl.textContent = visitors.filter((v) => v.timeOut !== "-").length;
+}
+
+// Clear input fields (both forms)
+function clearInputs() {
+  const ids = ["vName", "vContact", "vPurpose", "vHost", "qName", "qContact", "qPurpose", "qHost"];
+  ids.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+}
+
+// Search visitors in logs
+function searchVisitor() {
+  const input = document.getElementById("searchBar");
+  if (!input) return;
+
+  const query = input.value.toLowerCase();
+  const rows = document.querySelectorAll("#visitorTable tbody tr");
+
+  rows.forEach((row) => {
+    row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+  });
+}
+
+// Export CSV of all visitors
+function exportCSV() {
+  if (!visitors.length) {
+    alert("No data to export.");
+    return;
+  }
+
+  let csv = "ID,Name,Contact,Purpose,Host,Time In,Time Out\n";
+  visitors.forEach((v) => {
+    csv += `${v.id},${v.name},${v.contact},${v.purpose},${v.host},${v.timeIn},${v.timeOut}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "visitor_logs.csv";
+  link.click();
+}
+
+// Clear all history
+function clearHistory() {
+  const confirmDelete = confirm(
+    "Are you sure you want to clear all visitor history? This cannot be undone."
+  );
+  if (!confirmDelete) return;
+
+  visitors = [];
+  saveToStorage();
+  updateTable();
+  updateStats();
+  alert("Visitor history has been cleared.");
+}
+
+// Initialize page
+window.addEventListener("DOMContentLoaded", () => {
+  updateClock();
+  updateStats();
+  updateTable();
 });
-
-// Create task UI element
-function createTaskElement(title, description, completed) {
-  const taskDiv = document.createElement("div");
-  taskDiv.classList.add("task");
-  if (completed) taskDiv.classList.add("completed");
-
-  taskDiv.innerHTML = `
-    <h3>${title}</h3>
-    <p>${description}</p>
-    <button class="markBtn">${completed ? "Mark Incomplete" : "Mark Completed"}</button>
-    <button class="editBtn">Edit</button>
-    <button class="deleteBtn">Delete</button>
-  `;
-
-  // Mark as Completed / Incomplete
-  taskDiv.querySelector(".markBtn").addEventListener("click", function () {
-    taskDiv.classList.toggle("completed");
-    this.textContent = taskDiv.classList.contains("completed")
-      ? "Mark Incomplete"
-      : "Mark Completed";
-    saveTasksToLocalStorage();
-  });
-
-  // Delete task
-  taskDiv.querySelector(".deleteBtn").addEventListener("click", function () {
-    taskDiv.remove();
-    saveTasksToLocalStorage();
-  });
-
-  // Edit task
-  taskDiv.querySelector(".editBtn").addEventListener("click", function () {
-    const h3 = taskDiv.querySelector("h3");
-    const p = taskDiv.querySelector("p");
-
-    const newTitle = prompt("Edit Task Title:", h3.textContent);
-    const newDesc = prompt("Edit Task Description:", p.textContent);
-
-    if (newTitle !== null && newDesc !== null) {
-      h3.textContent = newTitle;
-      p.textContent = newDesc;
-      saveTasksToLocalStorage();
-    }
-  });
-
-  taskList.appendChild(taskDiv);
-}
-
-// Save all tasks to localStorage
-function saveTasksToLocalStorage() {
-  const tasks = [];
-  document.querySelectorAll(".task").forEach(taskDiv => {
-    const title = taskDiv.querySelector("h3").textContent;
-    const description = taskDiv.querySelector("p").textContent;
-    const completed = taskDiv.classList.contains("completed");
-    tasks.push({ title, description, completed });
-  });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
